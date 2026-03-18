@@ -109,6 +109,72 @@ gensim>=4.3.0
 
 ---
 
+## Financial Sentiment Analysis — 4-Stage NLP Pipeline
+
+A progressive NLP pipeline for financial sentiment classification, moving from a simple baseline to a fine-tuned transformer. Trained on FinancialPhraseBank (3,453 sentences, 75% agreement) and stress-tested against 30 live Yahoo Finance headlines.
+
+---
+
+### Pipeline Architecture
+
+| Stage | Model | Approach |
+|---|---|---|
+| 1 | TF-IDF + Logistic Regression | Baseline — bigrams, class balancing |
+| 2 | BiLSTM (PyTorch) | Sequential — custom vocabulary, 2-layer bidirectional |
+| 3 | FinBERT (fine-tuned) | Transformer — ProsusAI/finbert, 4 epochs |
+| 4 | Reality Check | Live Yahoo Finance headlines, 3-model comparison |
+
+---
+
+### Results on FinancialPhraseBank Test Set
+
+| Model | Accuracy | Macro F1 | Parameters |
+|---|---|---|---|
+| TF-IDF + LogReg | 85% | 0.80 | ~9K features |
+| BiLSTM | 80% | 0.75 | 991,355 |
+| FinBERT (fine-tuned) | 97% | 0.96 | 109,484,547 |
+
+---
+
+### Stage 4 — Reality Check on Live Headlines
+
+![Stage 4 Results](results/sentiment_stage4_results.png)
+
+**Disagreements: 27/30 (90%)** — well above the not production-ready threshold.
+
+---
+
+### Key Findings
+
+**1. Simple beats deep on small data**
+LogReg (Macro F1: 0.80) outperformed BiLSTM (0.75) despite having no sequence modeling. With only 3,453 training samples, the BiLSTM overfits — 991K parameters is too many for this dataset size. Deep learning needs more data to win.
+
+**2. FinBERT wins due to transfer learning, not architecture**
+97% accuracy comes from pre-training on millions of financial documents before fine-tuning. It is not a fair comparison to Stage 1 and 2 — FinBERT already knew financial language. Fine-tuning on 3,453 samples just calibrated the output layer.
+
+**3. 90% real-world disagreement reveals a critical gap**
+LogReg over-predicts POSITIVE on live headlines — Yahoo Finance headlines use promotional language ("surges", "rallies", "best") even for neutral stories. The model learned these words as positive signals from training data but they appear in neutral context on real headlines. This is a domain shift problem — FinancialPhraseBank sentences and news headlines have different linguistic structures.
+
+**4. Not production-ready — and here's why that matters**
+90% disagreement between three models means none of them should be trusted for live trading signals. A production sentiment system would need: (a) fine-tuning on actual news headlines, not phrase-bank sentences, (b) confidence thresholding — only act on high-confidence predictions, (c) ensemble logic — only trade when 2 or 3 models agree.
+
+---
+
+### Would you trade on this output?
+
+No. The 90% disagreement rate makes this unsuitable for live signal generation. However, FinBERT's 97% accuracy on clean labeled data shows the architecture is sound. The gap between lab performance and real-world performance is itself the finding — closing that gap requires headline-specific training data and walk-forward validation.
+
+---
+
+### Setup
+
+```bash
+pip install torch transformers scikit-learn pandas numpy requests joblib
+python financial_sentiment.py
+```
+
+Stage 3 takes ~45 minutes on CPU. Use Google Colab with GPU for Stage 3 — reduces to ~5 minutes.
+
 ## Author
 
 **Sumedha Hundekar** — Finance graduate building ML systems for quantitative finance in Python.  
