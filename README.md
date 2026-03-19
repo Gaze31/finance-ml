@@ -175,6 +175,10 @@ python financial_sentiment.py
 
 Stage 3 takes ~45 minutes on CPU. Use Google Colab with GPU for Stage 3 — reduces to ~5 minutes.
 
+GridWorld Q-Learning
+Tabular Q-learning agent trained on a custom 9×9 maze with walls, step penalties, and a goal reward. Implements epsilon-greedy exploration with multiplicative decay over 3,000 episodes. Agent successfully learns the optimal path from start to goal, confirmed by greedy rollout. Value map shows correct spatial gradient — high values near goal, decaying with distance.
+Results: policy.png | value_map.png
+
 ## Author
 
 **Sumedha Hundekar** — Finance graduate building ML systems for quantitative finance in Python.  
