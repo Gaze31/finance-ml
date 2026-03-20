@@ -179,6 +179,17 @@ GridWorld Q-Learning
 Tabular Q-learning agent trained on a custom 9×9 maze with walls, step penalties, and a goal reward. Implements epsilon-greedy exploration with multiplicative decay over 3,000 episodes. Agent successfully learns the optimal path from start to goal, confirmed by greedy rollout. Value map shows correct spatial gradient — high values near goal, decaying with distance.
 Results: policy.png | value_map.png
 
+DQN Stock Trading Agent — Pure NumPy Implementation
+Double DQN trading agent built entirely in NumPy — no PyTorch or TensorFlow. Forward pass, backpropagation, Adam optimizer, and Huber loss all implemented from scratch. Trained on 1,588 days of regime-switching synthetic price data (bull/bear/sideways phases).
+Results on 398-day unseen test set:
+
+Agent return: -0.26% | Buy & Hold: -7.09% | Alpha: +6.83%
+Max drawdown: -0.74% vs market drawdown of -7%
+Agent learned capital preservation during bear market — stayed flat instead of losing
+
+Training convergence: trades reduced from 800/episode to under 50 as epsilon decayed, returns improved from -2% to +1%.
+
+
 ## Author
 
 **Sumedha Hundekar** — Finance graduate building ML systems for quantitative finance in Python.  
