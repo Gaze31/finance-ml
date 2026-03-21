@@ -189,6 +189,12 @@ Agent learned capital preservation during bear market — stayed flat instead of
 
 Training convergence: trades reduced from 800/episode to under 50 as epsilon decayed, returns improved from -2% to +1%.
 
+ctor-Critic (A2C) Stock Trading Agent — Pure NumPy
+On-policy A2C agent with separate actor and critic networks, GAE-λ advantage estimation, entropy bonus with decay, and action masking. Implemented entirely in NumPy.
+Compared against DQN on identical test environment:
+DQNA2CAlpha vs B&H+6.83%+6.90%Max Drawdown-0.74%~flat
+Both agents learned capital preservation during bear market conditions. A2C converges faster due to on-policy updates — no replay buffer warmup needed.
+
 
 ## Author
 
