@@ -195,6 +195,16 @@ Compared against DQN on identical test environment:
 DQNA2CAlpha vs B&H+6.83%+6.90%Max Drawdown-0.74%~flat
 Both agents learned capital preservation during bear market conditions. A2C converges faster due to on-policy updates — no replay buffer warmup needed.
 
+RL Trading Agent Trilogy — Pure NumPy Implementations
+Three reinforcement learning algorithms implemented from scratch in NumPy — no PyTorch or TensorFlow. All tested on identical regime-switching price data (80/20 train/test split, 2000 days).
+AlgorithmApproachAlpha vs B&HKey FeatureDQNOff-policy, value-based+6.83%Experience replay, target networkA2COn-policy, policy gradient+6.90%GAE advantage, entropy bonusPPOOn-policy, clipped surrogate+6.43%Clip + KL early stop, K epochs
+All three agents learned capital preservation during bear market conditions — staying near $10,000 while buy-and-hold lost 7.09%.
+Key observations:
+
+A2C achieved highest alpha due to faster on-policy convergence
+PPO's KL early stopping correctly prevented policy collapse during the ratio spike at episode 90
+DQN required warmup period before learning selective trading; A2C and PPO learned faster through on-policy updates
+
 
 ## Author
 
