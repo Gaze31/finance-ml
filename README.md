@@ -205,6 +205,40 @@ A2C achieved highest alpha due to faster on-policy convergence
 PPO's KL early stopping correctly prevented policy collapse during the ratio spike at episode 90
 DQN required warmup period before learning selective trading; A2C and PPO learned faster through on-policy updates
 
+## 🎯 Overview
+
+GridSearchCV is a powerful technique for hyperparameter optimization in machine learning. This repository provides a complete guide with practical examples covering:
+
+- Basic GridSearchCV implementation
+- Advanced parameter tuning strategies
+- Pipeline integration
+- Custom scoring metrics
+- Visualization of results
+- Performance optimization techniques
+
+## ✨ Features
+
+- **Comprehensive Examples**: From basic to advanced implementations
+- **Multiple Algorithms**: SVM, Random Forest, and pipeline examples
+- **Visualization Tools**: Heatmaps and result analysis
+- **Performance Optimization**: Parallel processing and memory management
+- **Best Practices**: Industry-standard approaches and common pitfalls
+- **Real-world Datasets**: Examples using Iris and Breast Cancer datasets
+
+## 🚀 Installation
+
+### Prerequisites
+- Python 3.7 or higher
+- pip package manager
+
+### Setup
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/gridsearchcv-guide.git
+cd gridsearchcv-guide
+
+
 
 ## Author
 
