@@ -238,6 +238,67 @@ GridSearchCV is a powerful technique for hyperparameter optimization in machine 
 git clone https://github.com/yourusername/gridsearchcv-guide.git
 cd gridsearchcv-guide
 
+# Auto-sklearn Quantitative Finance Pipeline
+
+Automated return prediction using walk-forward validation and ensemble ML.
+
+## What it does
+
+1. **Generates** synthetic OHLCV data (or plug in real data from yfinance)
+2. **Engineers** 8 lagged factor features — momentum, volatility, RSI, volume z-score
+3. **Runs walk-forward CV** — expanding window, 252-day burn-in, 21-day test folds
+4. **Fits AutoSklearnClassifier** per fold (falls back to GBM if auto-sklearn not installed)
+5. **Constructs** a long/short decile portfolio with transaction costs
+6. **Reports** Sharpe, Sortino, Calmar, Max DD, IC, and plots a 4-panel dashboard
+
+## Setup
+
+```bash
+pip install numpy pandas scipy scikit-learn matplotlib
+
+# For full AutoML (Linux only):
+pip install auto-sklearn
+```
+
+## Run
+
+```bash
+python pipeline.py
+```
+
+## Swapping in real data
+
+Replace `generate_synthetic_ohlcv()` in `main()` with:
+
+```python
+import yfinance as yf
+tickers = ["AAPL", "MSFT", "GOOG", ...]  # your universe
+raw = yf.download(tickers, start="2018-01-01", end="2024-01-01")
+# reshape to long format with columns: date, ticker, open, high, low, close, volume
+```
+
+## Enabling auto-sklearn
+
+Set `use_autosklearn=True` in `run_walk_forward()` after installing auto-sklearn.
+Budget `automl_time_secs` controls how long the search runs per fold.
+
+## Key parameters
+
+| Parameter | Default | Effect |
+|---|---|---|
+| `burn_in_days` | 252 | Minimum training before first prediction |
+| `test_days` | 21 | Test window per fold (~1 month) |
+| `long_quantile` | 0.9 | Top decile signal threshold |
+| `transaction_cost_bps` | 5 | Round-trip cost per trade |
+| `automl_time_secs` | 120 | AutoML search budget per fold |
+
+## Honest limitations
+
+- 54% accuracy sounds weak — it compounds significantly at scale
+- High turnover kills the signal if TC > ~15bps
+- Auto-sklearn doesn't pick your features — garbage in, garbage out
+- Synthetic data has no real alpha — plug in real data before drawing conclusions
+
 
 
 ## Author
