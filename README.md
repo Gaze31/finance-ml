@@ -299,6 +299,26 @@ Budget `automl_time_secs` controls how long the search runs per fold.
 - Auto-sklearn doesn't pick your features — garbage in, garbage out
 - Synthetic data has no real alpha — plug in real data before drawing conclusions
 
+# Stock Market Clustering with K-Means
+
+A data science project that clusters stocks based on their historical returns and volatility using K-Means algorithm. Provides insights for portfolio diversification and investment strategy.
+
+## Features
+
+- Fetches real-time stock data from Yahoo Finance (`yfinance`)
+- Computes annualized returns, volatility, and Sharpe ratio
+- Determines optimal number of clusters using elbow method & silhouette score
+- Visualizes clusters in 2D (return vs. risk) and 3D (including Sharpe ratio)
+- Generates cluster summaries and investment recommendations
+- Exports results to CSV for further analysis
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/stock-kmeans-clustering.git
+   cd stock-kmeans-clustering
+
 
 
 ## Author
